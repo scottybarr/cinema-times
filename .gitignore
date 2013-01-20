@@ -1,2 +1,4 @@
 .idea
 secret_key.py
+db
+*.pyc
