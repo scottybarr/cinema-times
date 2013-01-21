@@ -1,0 +1,1 @@
+CINEWORLD_SYNDICATION_URL = "http://www.cineworld.co.uk/syndication/"
