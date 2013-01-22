@@ -21,9 +21,13 @@ class CineworldImport:
             phone = self.try_get_attrib(e, 'phone')
             address = self.try_get_attrib(e, 'address')
             cinema_id = e.attrib['id']
+            url = e.attrib['root'] + e.attrib['url']
 
     def try_get_attrib(self, e, key):
         try:
             return e.attrib[key]
         except Exception:
             return ""
+
+    def get_coords(self):
+        pass
