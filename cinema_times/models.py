@@ -39,15 +39,15 @@ class Website(models.Model):
     class Admin:
         pass
 
-class V_ideo_type(models.Model):
+class VideoType(models.Model):
     video_type_id = models.AutoField(primary_key=True, unique=True)
     video_desc = models.TextField(null=True)
     video_type = models.CharField(max_length=20)
 
-class Audio_type(models.Model):
-    audio_type_id = models.AutoField(primary_key=True, unique=True)
+class AudioType(models.Model):
+    AudioType_id = models.AutoField(primary_key=True, unique=True)
     audio_desc = models.TextField(null=True)
-    audio_type = models.CharField(max_length=20)
+    AudioType = models.CharField(max_length=20)
 
 class Schedule(models.Model):
     schedule_id = models.AutoField(primary_key=True, unique=True)
@@ -56,8 +56,8 @@ class Schedule(models.Model):
     film_internal_id = models.CharField(max_length=100,null=True)
     datetime = models.DateTimeField()
     subtitled = models.BooleanField(default=False)
-    video_type_id = models.ForeignKey(V_ideo_type, blank=True)
-    audio_type_id = models.ForeignKey(Audio_type, blank=True)
+    video_type_id = models.ForeignKey(VideoType, blank=True)
+    AudioType_id = models.ForeignKey(AudioType, blank=True)
     booking_url = models.TextField(null=True)
     session_type = models.CharField(max_length=50, null=True)
 
