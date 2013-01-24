@@ -23,7 +23,6 @@ class CineworldImport:
             url = e.attrib['root'] + e.attrib['url']
             lat, long = self.get_coords(url)
 
-
     def try_get_attrib(self, e, key):
         try:
             return e.attrib[key]
@@ -38,4 +37,3 @@ class CineworldImport:
     def load_cinema_page(self, url):
         req = requests.get(url)
         return html.fromstring(req.content)
-
