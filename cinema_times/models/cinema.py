@@ -1,5 +1,5 @@
 from django.db import models
-from cinema_company import CinemaCompany
+from cinema_times.models.cinema_company import CinemaCompany
 
 
 class Cinema(models.Model):

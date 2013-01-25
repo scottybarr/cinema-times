@@ -1,8 +1,8 @@
 from django.db import models
-from film import Film
-from cinema import Cinema
-from video_type import VideoType
-from audio_type import AudioType
+from cinema_times.models.film import Film
+from cinema_times.models.cinema import Cinema
+from cinema_times.models.video_type import VideoType
+from cinema_times.models.audio_type import AudioType
 
 
 class Schedule(models.Model):

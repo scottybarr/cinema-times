@@ -1,8 +1,8 @@
 from django.db import models
-from cinema import Cinema
-from cinema_company import CinemaCompany
-from film import Film
-from schedule import Schedule
+from cinema_times.models.cinema import Cinema
+from cinema_times.models.cinema_company import CinemaCompany
+from cinema_times.models.film import Film
+from cinema_times.models.schedule import Schedule
 
 
 class FilmReelLogger(models.Model):
