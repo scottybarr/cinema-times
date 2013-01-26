@@ -5,9 +5,22 @@ from cinema_times.models import Cinema, CinemaCompany
 
 class CineworldImport:
     def __init__(self, config):
+        self.company_name = "Cineworld"
         self.url = config.CINEWORLD_SYNDICATION_URL + "listings.xml"
+        self.company_id = self.create_cinema_company()
         xml = self.get_xml()
         self.parse_xml(xml)
+
+    def create_cinema_company(self):
+        try:
+            self.cinema_company = CinemaCompany(
+                company_name=self.company_name,
+                company_website="http://www.cineworld.co.uk"
+            )
+            self.cinema_company.save()
+        except Exception as e:
+            self.cinema_company = CinemaCompany.objects.filter(company_name=self.company_name)
+        return self.cinema_company.company_id
 
     def get_xml(self):
         req = requests.get(self.url)
@@ -30,6 +43,8 @@ class CineworldImport:
             return ""
 
     def get_coords(self, url):
+        # Check DB to see if we have coords already
+        cinema = Cinema
         contents = self.load_cinema_page(url)
         coords = contents.xpath("//div[contains(@class,'map')]/@data-coordinates")[0]
         return coords.split(',')
