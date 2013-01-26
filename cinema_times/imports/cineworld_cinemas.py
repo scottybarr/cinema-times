@@ -44,7 +44,6 @@ class CineworldImport:
 
     def get_coords(self, url):
         # Check DB to see if we have coords already
-        cinema = Cinema
         contents = self.load_cinema_page(url)
         coords = contents.xpath("//div[contains(@class,'map')]/@data-coordinates")[0]
         return coords.split(',')
