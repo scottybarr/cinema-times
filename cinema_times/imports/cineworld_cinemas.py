@@ -34,7 +34,7 @@ class CineworldImport:
             address = self.try_get_attrib(e, 'address')
             cinema_id = e.attrib['id']
             url = e.attrib['root'] + e.attrib['url']
-            lat, long = self.get_coords(url)
+            lat, long = self.get_coords(cinema_id, url)
 
     def try_get_attrib(self, e, key):
         try:
@@ -42,12 +42,15 @@ class CineworldImport:
         except Exception:
             return ""
 
-    def get_coords(self, url):
-        # Check DB to see if we have coords already
-        contents = self.load_cinema_page(url)
-        coords = contents.xpath("//div[contains(@class,'map')]/@data-coordinates")[0]
-        return coords.split(',')
+    def get_coords(self, cinema_id, url):
+        if not self.check_cinema_exists(cinema_id):
+            contents = self.load_cinema_page(url)
+            coords = contents.xpath("//div[contains(@class,'map')]/@data-coordinates")[0]
+            return coords.split(',')
 
     def load_cinema_page(self, url):
         req = requests.get(url)
         return html.fromstring(req.content)
+
+    def check_cinema_exists(self, cinema_id):
+        return False
