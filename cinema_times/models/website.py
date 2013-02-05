@@ -6,5 +6,9 @@ class Website(models.Model):
     url = models.TextField()
     tracker_url = models.TextField()
     tracker_params = models.TextField()
+
     class Admin:
         pass
+
+    class Meta:
+        app_label = 'cinema_times'

@@ -16,3 +16,6 @@ class Schedule(models.Model):
     AudioType_id = models.ForeignKey(AudioType, blank=True)
     booking_url = models.TextField(null=True)
     session_type = models.CharField(max_length=50, null=True)
+
+    class Meta:
+        app_label = 'cinema_times'

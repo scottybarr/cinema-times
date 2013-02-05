@@ -8,5 +8,9 @@ class Film(models.Model):
     length = models.FloatField(null=True)
     rating = models.CharField(max_length=20, null=True)
     director = models.CharField(max_length=40, null=True)
+
     class Admin:
         pass
+
+    class Meta:
+        app_label = 'cinema_times'

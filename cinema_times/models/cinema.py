@@ -11,5 +11,9 @@ class Cinema(models.Model):
     phone = models.CharField(max_length=15, null=True)
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
+
     class Admin:
         pass
+
+    class Meta:
+        app_label = 'cinema_times'

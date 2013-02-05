@@ -14,3 +14,6 @@ class FilmReelLogger(models.Model):
     ip = models.CharField(max_length=50)
     dateTime = models.DateTimeField()
     url = models.TextField(blank=True)
+
+    class Meta:
+        app_label = 'cinema_times'
