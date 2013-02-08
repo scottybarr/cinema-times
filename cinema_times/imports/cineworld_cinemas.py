@@ -13,14 +13,14 @@ class CineworldImport:
 
     def create_cinema_company(self):
         try:
-            self.cinema_company = CinemaCompany(
+            cinema_company = CinemaCompany(
                 company_name=self.company_name,
                 company_website="http://www.cineworld.co.uk"
             )
-            self.cinema_company.save()
+            cinema_company.save()
         except Exception as e:
-            self.cinema_company = CinemaCompany.objects.filter(company_name=self.company_name)
-        return self.cinema_company.company_id
+            cinema_company = CinemaCompany.objects.get(company_name=self.company_name)
+        return cinema_company
 
     def get_xml(self):
         req = requests.get(self.url)
@@ -34,7 +34,18 @@ class CineworldImport:
             address = self.try_get_attrib(e, 'address')
             cinema_id = e.attrib['id']
             url = e.attrib['root'] + e.attrib['url']
-            lat, long = self.get_coords(cinema_id, url)
+            if not self.check_cinema_exists(cinema_id):
+                lat, long = self.get_coords(url)
+                c = Cinema(
+                    cinema_name=name,
+                    company_id=self.company_id,
+                    company_cinema_id=cinema_id,
+                    address=address,
+                    phone="",
+                    latitude=lat,
+                    longitude=long
+                )
+                c.save()
 
     def try_get_attrib(self, e, key):
         try:
@@ -42,15 +53,16 @@ class CineworldImport:
         except Exception:
             return ""
 
-    def get_coords(self, cinema_id, url):
-        if not self.check_cinema_exists(cinema_id):
-            contents = self.load_cinema_page(url)
-            coords = contents.xpath("//div[contains(@class,'map')]/@data-coordinates")[0]
-            return coords.split(',')
+    def get_coords(self, url):
+        contents = self.load_cinema_page(url)
+        contents = html.fromstring(contents)
+        coords = contents.xpath("//div[contains(@class,'map')]/@data-coordinates")[0]
+        return coords.split(',')
 
     def load_cinema_page(self, url):
-        req = requests.get(url)
-        return html.fromstring(req.content)
+       req = requests.get(url)
+       return req.content
 
     def check_cinema_exists(self, cinema_id):
-        return False
+        cinema = Cinema.objects.get(company_cinema_id=cinema_id, company_id=self.company_id)
+        return True if cinema else False
