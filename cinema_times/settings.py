@@ -1,6 +1,6 @@
 # Django settings for cinema_times project.
 
-
+import djcelery
 from secret_key import *
 
 DEBUG = True
@@ -150,3 +150,11 @@ LOGGING = {
         },
     }
 }
+
+REDIS_URL = 'redis://localhost:6379/0'
+BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
+
+BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+
+djcelery.setup_loader()
