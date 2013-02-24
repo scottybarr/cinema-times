@@ -1,4 +1,4 @@
-import requests
+from import_helpers import get_url, try_get_attrib
 from lxml import objectify, html
 from cinema_times.models import Cinema, CinemaCompany
 
@@ -8,7 +8,7 @@ class CineworldImport:
         self.company_name = "Cineworld"
         self.url = config.CINEWORLD_SYNDICATION_URL + "listings.xml"
         self.company_id = self.create_cinema_company()
-        xml = self.get_xml()
+        xml = get_url(self.url)
         self.parse_xml(xml)
 
     def create_cinema_company(self):
@@ -18,20 +18,16 @@ class CineworldImport:
                 company_website="http://www.cineworld.co.uk"
             )
             cinema_company.save()
-        except Exception as e:
+        except Exception:
             cinema_company = CinemaCompany.objects.get(company_name=self.company_name)
         return cinema_company
-
-    def get_xml(self):
-        req = requests.get(self.url)
-        return req.content
 
     def parse_xml(self, xml):
         root = objectify.fromstring(xml)
         for e in root.iterchildren():
             name = e.attrib['name']
-            phone = self.try_get_attrib(e, 'phone')
-            address = self.try_get_attrib(e, 'address')
+            phone = try_get_attrib(e, 'phone')
+            address = try_get_attrib(e, 'address')
             cinema_id = e.attrib['id']
             url = e.attrib['root'] + e.attrib['url']
             if not self.check_cinema_exists(cinema_id):
@@ -47,21 +43,12 @@ class CineworldImport:
                 )
                 c.save()
 
-    def try_get_attrib(self, e, key):
-        try:
-            return e.attrib[key]
-        except Exception:
-            return ""
-
-    def get_coords(self, url):
-        contents = self.load_cinema_page(url)
+    @staticmethod
+    def get_coords(url):
+        contents = get_url(url)
         contents = html.fromstring(contents)
         coords = contents.xpath("//div[contains(@class,'map')]/@data-coordinates")[0]
         return coords.split(',')
-
-    def load_cinema_page(self, url):
-       req = requests.get(url)
-       return req.content
 
     def check_cinema_exists(self, cinema_id):
         cinema = Cinema.objects.get(company_cinema_id=cinema_id, company_id=self.company_id)
