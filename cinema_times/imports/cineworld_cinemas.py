@@ -10,7 +10,6 @@ class CineworldImport(CinemaImport):
         xml = self.get_url(self.url)
         self.parse_xml(xml)
 
-
     def parse_xml(self, xml):
         root = objectify.fromstring(xml)
         for e in root.iterchildren():
@@ -32,9 +31,8 @@ class CineworldImport(CinemaImport):
                 )
                 c.save()
 
-    @staticmethod
-    def get_coords(url):
-        contents = get_url(url)
+    def get_coords(self, url):
+        contents = self.get_url(url)
         contents = html.fromstring(contents)
         coords = contents.xpath("//div[contains(@class,'map')]/@data-coordinates")[0]
         return coords.split(',')
