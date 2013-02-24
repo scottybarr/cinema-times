@@ -22,13 +22,6 @@ class CinemaImport(object):
         return True if cinema else False
 
     @staticmethod
-    def try_get_attrib(e, key):
-        try:
-            return e.attrib[key]
-        except Exception:
-            return ""
-
-    @staticmethod
     def get_url(url):
         req = requests.get(url)
         return req.content

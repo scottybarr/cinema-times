@@ -5,31 +5,32 @@ from cinema_import import CinemaImport
 
 class CineworldImport(CinemaImport):
     def __init__(self, config):
-        self.url = config.CINEWORLD_SYNDICATION_URL + "listings.xml"
         self.company_id = self.create_cinema_company("Cineworld", "http://www.cineworld.co.uk")
-        xml = self.get_url(self.url)
+        xml = self.get_url(config.CINEWORLD_SYNDICATION_URL + "listings.xml")
         self.parse_xml(xml)
 
     def parse_xml(self, xml):
         root = objectify.fromstring(xml)
         for e in root.iterchildren():
-            name = e.attrib['name']
-            phone = self.try_get_attrib(e, 'phone')
-            address = self.try_get_attrib(e, 'address')
-            cinema_id = e.attrib['id']
-            url = e.attrib['root'] + e.attrib['url']
-            if not self.check_cinema_exists(self.company_id, cinema_id):
-                lat, long = self.get_coords(url)
-                c = Cinema(
-                    cinema_name=name,
+            cinema_data = {
+                'name': e.attrib.get('name', None),
+                'phone': e.attrib.get('phone', None),
+                'address': e.attrib.get('address', None),
+                'id': e.attrib.get('id', None),
+                'url': e.attrib.get('root', '') + e.attrib.get('url', '')
+            }
+            if not self.check_cinema_exists(self.company_id, cinema_data['id']):
+                lat, long = self.get_coords(cinema_data['url'])
+                cinema = Cinema(
+                    cinema_name=cinema_data['name'],
                     company_id=self.company_id,
-                    company_cinema_id=cinema_id,
-                    address=address,
-                    phone="",
+                    company_cinema_id=cinema_data['id'],
+                    address=cinema_data['address'],
+                    phone=cinema_data['phone'],
                     latitude=lat,
                     longitude=long
                 )
-                c.save()
+                cinema.save()
 
     def get_coords(self, url):
         contents = self.get_url(url)
