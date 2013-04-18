@@ -3,7 +3,7 @@ from cinema_times.models import Cinema
 from cinema_import import CinemaImport
 
 
-class CineworldImport(CinemaImport):
+class CineworldCinemas(CinemaImport):
     def __init__(self, config):
         self.company_id = self.create_cinema_company("Cineworld", "http://www.cineworld.co.uk")
         xml = self.get_url(config.CINEWORLD_SYNDICATION_URL + "listings.xml")
