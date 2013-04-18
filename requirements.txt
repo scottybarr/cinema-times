@@ -1,0 +1,5 @@
+django==1.4.3
+psycopg2==2.5
+lxml==3.1beta1
+requests==1.1.0
+celery==3.0.17
