@@ -8,18 +8,14 @@ class CinemaImport(object):
         self.company_name = None
 
     def create_cinema_company(self, company_name, url):
-        cinema_company = CinemaCompany.objects.get(company_name=company_name)
-        if cinema_company:
-            return cinema_company
-
         try:
+            return CinemaCompany.objects.get(company_name=company_name)
+        except Exception:
             cinema_company = CinemaCompany(
                 company_name=company_name,
                 company_website=url
             )
             cinema_company.save()
-        except Exception:
-            pass
         return cinema_company
 
     def check_cinema_exists(self, company_id, cinema_id):
