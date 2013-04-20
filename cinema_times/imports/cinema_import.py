@@ -26,16 +26,28 @@ class CinemaImport(object):
             return False
 
     def get_all_cinemas(self, company_id):
-        return Cinema.objects.filter(company_id=company_id)
+        return {
+            c.cinema_id: c
+            for c in Cinema.objects.filter(company_id=company_id)
+        }
 
-    def get_all_films(self, title):
-        return Film.objects.filter(title=title)
+    def get_all_films(self):
+        return {
+            f.film_id: f
+            for f in Film.objects.filter()
+        }
 
-    def get_all_video_types(self, video_type):
-        return VideoType.objects.filter(video_type=video_type)
+    def get_all_video_types(self):
+        return {
+            v.video_type_id: v
+            for v in VideoType.objects.filter()
+        }
 
-    def get_all_audio_types(self, audio_type):
-        return AudioType.objects.filter(video_type=audio_type)
+    def get_all_audio_types(self):
+        return {
+            a.audio_type_id: a
+            for a in AudioType.objects.filter()
+        }
 
     @staticmethod
     def get_url(url):
