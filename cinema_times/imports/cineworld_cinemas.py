@@ -23,7 +23,7 @@ class CineworldCinemas(CinemaImport):
                 lat, long = self.get_coords(cinema_data['url'])
                 cinema = Cinema(
                     cinema_name=cinema_data['name'],
-                    company_id=self.company_id,
+                    company=self.company_id,
                     company_cinema_id=cinema_data['id'],
                     address=cinema_data['address'],
                     phone=cinema_data['phone'],

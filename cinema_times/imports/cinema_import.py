@@ -20,7 +20,7 @@ class CinemaImport(object):
 
     def check_cinema_exists(self, company_id, cinema_id):
         try:
-            cinema = Cinema.objects.get(company_cinema_id=cinema_id, company_id=company_id)
+            cinema = Cinema.objects.get(company_cinema_id=cinema_id, company=company_id)
             return True if cinema else False
         except ObjectDoesNotExist:
             return False
@@ -28,7 +28,7 @@ class CinemaImport(object):
     def get_all_cinemas(self, company_id):
         return {
             str(c.cinema_id): c
-            for c in Cinema.objects.filter(company_id=company_id)
+            for c in Cinema.objects.filter(company=company_id)
         }
 
     def get_all_films(self):
