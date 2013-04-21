@@ -27,7 +27,7 @@ class CinemaImport(object):
 
     def get_all_cinemas(self, company_id):
         return {
-            c.cinema_id: c
+            str(c.cinema_id): c
             for c in Cinema.objects.filter(company_id=company_id)
         }
 
@@ -48,6 +48,7 @@ class CinemaImport(object):
             a.audio_type: a
             for a in AudioType.objects.filter()
         }
+
 
     @staticmethod
     def get_url(url):
