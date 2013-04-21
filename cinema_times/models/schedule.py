@@ -13,7 +13,7 @@ class Schedule(models.Model):
     datetime = models.DateTimeField()
     subtitled = models.BooleanField(default=False)
     video_type_id = models.ForeignKey(VideoType, blank=True)
-    AudioType_id = models.ForeignKey(AudioType, blank=True)
+    audio_type_id = models.ForeignKey(AudioType, blank=True)
     booking_url = models.TextField(null=True)
     session_type = models.CharField(max_length=50, null=True)
 
