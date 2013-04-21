@@ -33,19 +33,19 @@ class CinemaImport(object):
 
     def get_all_films(self):
         return {
-            f.film_id: f
+            f.title: f
             for f in Film.objects.filter()
         }
 
     def get_all_video_types(self):
         return {
-            v.video_type_id: v
+            v.video_type: v
             for v in VideoType.objects.filter()
         }
 
     def get_all_audio_types(self):
         return {
-            a.audio_type_id: a
+            a.audio_type: a
             for a in AudioType.objects.filter()
         }
 
