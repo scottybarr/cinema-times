@@ -1,8 +1,8 @@
-from cinema_import import CinemaImport
-from cinema_times import config
-from cinema_times.models import CinemaCompany, Schedule, Film, VideoType, AudioType
 import xmltodict
 import dateutil.parser
+from cinema_times.imports.cinema_import import CinemaImport
+from cinema_times import config
+from cinema_times.models import CinemaCompany, Schedule, Film, VideoType, AudioType
 
 
 class CineworldSchedule(CinemaImport):

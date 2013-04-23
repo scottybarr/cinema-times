@@ -1,7 +1,7 @@
+import xmltodict
 from lxml import html
 from cinema_times.models import Cinema
-from cinema_import import CinemaImport
-import xmltodict
+from cinema_times.imports.cinema_import import CinemaImport
 
 
 class CineworldCinemas(CinemaImport):
