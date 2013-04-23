@@ -8,8 +8,8 @@ from cinema_times import views
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'cinema_times.views.home', name='home'),
-    url(r'^import/cineworld/cinemas/?', 'cinema_times.views.import_cineworld_schedule', name='import_cineworld_schedule'),
-    url(r'^import/cineworld/schedule/?', 'cinema_times.views.import_cineworld_schedule', name='import_cineworld_schedule'),
+    url(r'^import/cineworld/schedule/?', 'cinema_times.imports.cineworld.import_cineworld_schedule', name='import_cineworld_schedule'),
+    url(r'^import/cineworld/cinema/?', 'cinema_times.imports.cineworld.import_cineworld_cinemas', name='import_cineworld_cinemas'),
     url(r'^locations/?$', 'cinema_times.views.cinema_locations', name='cinema_locations'),
     # url(r'^cinema_times/', include('cinema_times.foo.urls')),
 
